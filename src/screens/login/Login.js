@@ -11,6 +11,50 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 class Login extends Component {
 
+    constructor() {
+        super();
+        this.state = {
+          username: "",
+          usernameRequired: "dispNone",
+          loginPassword: "",
+          loginPasswordRequired: "dispNone",
+          incorrectCredentials: "dispNone",
+        };
+      }
+    
+      inputUserNameChangeHandler = (e) => {
+        this.setState({ username: e.target.value });
+      };
+    
+      inputLoginPasswordChangeHandler = (e) => {
+        this.setState({ loginPassword: e.target.value });
+      };
+    
+      loginClickHandler = () => {
+        this.state.username === ""
+          ? this.setState({ usernameRequired: "dispBlock" })
+          : this.setState({ usernameRequired: "dispNone" });
+        this.state.loginPassword === ""
+          ? this.setState({ loginPasswordRequired: "dispBlock" })
+          : this.setState({ loginPasswordRequired: "dispNone" });
+    
+        let username = "user",
+          password = "user",
+          accessToken = "IGQVJWNXhzZAFBocy15MEg2X2pSMjJCOFJMdnJRRGg1bFFKQklDSm5ET2tzeFZAqNUJodWhlZAjVzWnpJWS1LNVpMQ3dEZA1pzRFNLX2ZA2M1QtN3ctNGVkV284NnhzXzBKeTk5WXFxQ2JJaFBBRzVrUVp3eE5WRWlCU2RISXA0"
+        this.setState({ incorrectCredentials: "dispNone" });
+        if (
+          this.state.username === username &&
+          this.state.loginPassword === password
+        ) {
+          window.sessionStorage.setItem("access-token", accessToken);
+          this.props.history.push("/home");
+        } else {
+          if (this.state.username !== "" && this.state.loginPassword !== "") {
+            this.setState({ incorrectCredentials: "dispBlock" });
+          }
+        }
+      };
+
     render() {
         return (
           <div>
