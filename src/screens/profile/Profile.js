@@ -121,6 +121,49 @@ class Profile extends Component {
         xhr.send(data);
       }
 
+      getImages(info) {
+        let data = null;
+        let xhr = new XMLHttpRequest();
+        let that = this;
+        let accessToken = window.sessionStorage.getItem("access-token");
+        xhr.addEventListener("readystatechange", function () {
+          if (this.readyState === 4) {
+            let parsedData = JSON.parse(this.responseText);
+            let newStateArray;
+            let post = {};
+            post.id = parsedData.id;
+            post.caption = info.caption || "This is default caption";
+            post.media_url = parsedData.media_url;
+            post.profilePic = that.state.profilePic;
+            post.username = parsedData.username;
+            post.likeIcon = "dispBlock";
+            post.likedIcon = "dispNone";
+            post.likesCount = Math.floor(Math.random() * 10);
+            post.clear = "";
+            post.tags = post.caption.match(/#\S+/g);
+            post.postComments = [];
+            post.timestamp = new Date(parsedData.timestamp);
+            newStateArray = that.state.postList.slice();
+            newStateArray.push(post);
+            that.setState({
+              postList: newStateArray,
+            });
+          }
+        });
+    
+        //graph.instagram.com/17895695668004550?fields=id,media_type,media_url,username,timestamp&access_token=YourAccessToken
+        xhr.open(
+          "GET",
+          this.props.baseUrl +
+            info.id +
+            "?fields=id,media_type,media_url,username,timestamp&access_token=" +
+            accessToken
+        );
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(data);
+      }
+
     render() {
         const { classes } = this.props;
         return (
