@@ -68,6 +68,80 @@ class Header extends Component {
           >
             Image Viewer
           </span>
+          <div>
+            {this.props.home === "true" || this.props.profile === "true" ? (
+              <div className="pro-pic">
+                <IconButton className="icon" onClick={this.openHandler}>
+                  <img
+                    src={this.props.profilePic}
+                    alt="pic"
+                    className="profile-image"
+                  ></img>
+                </IconButton>
+                <StyledMenu
+                  id="customized-menu"
+                  anchorEl={this.state.type}
+                  keepMounted
+                  open={Boolean(this.state.type)}
+                  onClose={this.closeHandler}
+                >
+                  {this.props.home === "true" ? (
+                    <div>
+                      <StyledMenuItem>
+                        <ListItemText
+                          primary={
+                            <Typography
+                              type="body2"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              My Account
+                            </Typography>
+                          }
+                          onClick={this.myAccountHandler}
+                        />
+                      </StyledMenuItem>
+                      <hr style={{ marginLeft: 15, marginRight: 15 }} />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <StyledMenuItem>
+                    <ListItemText
+                      primary={
+                        <Typography type="body2" style={{ fontWeight: "bold" }}>
+                          Logout
+                        </Typography>
+                      }
+                      onClick={this.logoutHandler}
+                    />
+                  </StyledMenuItem>
+                </StyledMenu>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          <div>
+            {this.props.home === "true" ? (
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <Input
+                  disableUnderline={true}
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                  onChange={this.inputChangeHandler}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
                 </header>
                 </div>
         )
