@@ -10,57 +10,57 @@ import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";  
 
 class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      username: "",
+      usernameRequired: "dispNone",
+      loginPassword: "",
+      loginPasswordRequired: "dispNone",
+      incorrectCredentials: "dispNone",
+    };
+  }
 
-    constructor() {
-        super();
-        this.state = {
-          username: "",
-          usernameRequired: "dispNone",
-          loginPassword: "",
-          loginPasswordRequired: "dispNone",
-          incorrectCredentials: "dispNone",
-        };
+  inputUserNameChangeHandler = (e) => {
+    this.setState({ username: e.target.value });
+  };
+
+  inputLoginPasswordChangeHandler = (e) => {
+    this.setState({ loginPassword: e.target.value });
+  };
+
+  loginClickHandler = () => {
+    this.state.username === ""
+      ? this.setState({ usernameRequired: "dispBlock" })
+      : this.setState({ usernameRequired: "dispNone" });
+    this.state.loginPassword === ""
+      ? this.setState({ loginPasswordRequired: "dispBlock" })
+      : this.setState({ loginPasswordRequired: "dispNone" });
+
+    let username = "user",
+      password = "user",
+      accessToken = "IGQVJWNXhzZAFBocy15MEg2X2pSMjJCOFJMdnJRRGg1bFFKQklDSm5ET2tzeFZAqNUJodWhlZAjVzWnpJWS1LNVpMQ3dEZA1pzRFNLX2ZA2M1QtN3ctNGVkV284NnhzXzBKeTk5WXFxQ2JJaFBBRzVrUVp3eE5WRWlCU2RISXA0"
+    this.setState({ incorrectCredentials: "dispNone" });
+    if (
+      this.state.username === username &&
+      this.state.loginPassword === password
+    ) {
+      window.sessionStorage.setItem("access-token", accessToken);
+      this.props.history.push("/home");
+    } else {
+      if (this.state.username !== "" && this.state.loginPassword !== "") {
+        this.setState({ incorrectCredentials: "dispBlock" });
       }
-    
-      inputUserNameChangeHandler = (e) => {
-        this.setState({ username: e.target.value });
-      };
-    
-      inputLoginPasswordChangeHandler = (e) => {
-        this.setState({ loginPassword: e.target.value });
-      };
-    
-      loginClickHandler = () => {
-        this.state.username === ""
-          ? this.setState({ usernameRequired: "dispBlock" })
-          : this.setState({ usernameRequired: "dispNone" });
-        this.state.loginPassword === ""
-          ? this.setState({ loginPasswordRequired: "dispBlock" })
-          : this.setState({ loginPasswordRequired: "dispNone" });
-    
-        let username = "user",
-          password = "user",
-          accessToken = "IGQVJWNXhzZAFBocy15MEg2X2pSMjJCOFJMdnJRRGg1bFFKQklDSm5ET2tzeFZAqNUJodWhlZAjVzWnpJWS1LNVpMQ3dEZA1pzRFNLX2ZA2M1QtN3ctNGVkV284NnhzXzBKeTk5WXFxQ2JJaFBBRzVrUVp3eE5WRWlCU2RISXA0"
-        this.setState({ incorrectCredentials: "dispNone" });
-        if (
-          this.state.username === username &&
-          this.state.loginPassword === password
-        ) {
-          window.sessionStorage.setItem("access-token", accessToken);
-          this.props.history.push("/home");
-        } else {
-          if (this.state.username !== "" && this.state.loginPassword !== "") {
-            this.setState({ incorrectCredentials: "dispBlock" });
-          }
-        }
-      };
+    }
+  };
 
-    render() {
-        return (
-          <div>
-              <div className="card-container">
+  render() {
+    return (
+      <div>
+        <Header />
+        <div className="card-container">
           <Card>
-          <div className="card-content">
+            <div className="card-content">
               <Typography variant="h5" component="h2">
                 LOGIN
               </Typography>
@@ -107,13 +107,11 @@ class Login extends Component {
                 LOGIN
               </Button>
             </div>
-
           </Card>
-          </div>
-    </div>
+        </div>
+      </div>
     );
   }
-
 }
 
 export default Login;
