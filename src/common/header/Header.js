@@ -1,6 +1,60 @@
 import React, { Component } from "react";
 import "./Header.css";
 
+const styles = (theme) => ({
+    search: {
+      position: "relative",
+      borderRadius: "4px",
+      backgroundColor: "#c0c0c0",
+      marginLeft: 0,
+      width: "300px",
+      float: "right",
+      marginTop: "18px",
+    },
+    searchIcon: {
+      padding: theme.spacing(0, 2),
+      height: "100%",
+      position: "absolute",
+      pointerEvents: "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    inputRoot: {
+      color: "inherit",
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 7),
+      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    },
+  });
+  
+  const StyledMenu = withStyles({
+    paper: {
+      border: "4px",
+      backgroundColor: "#ededed",
+      marginTop: "6px",
+    },
+  })((props) => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "left",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "center",
+      }}
+      {...props}
+    />
+  ));
+  
+  const StyledMenuItem = withStyles((theme) => ({
+    root: {},
+  }))(MenuItem);
+
 class Header extends Component {
 
     render() {
