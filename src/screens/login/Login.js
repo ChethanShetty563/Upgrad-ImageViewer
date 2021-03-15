@@ -16,6 +16,53 @@ class Login extends Component {
           <div>
               <div className="card-container">
           <Card>
+          <div className="card-content">
+              <Typography variant="h5" component="h2">
+                LOGIN
+              </Typography>
+              <br />
+              <FormControl required>
+                <InputLabel htmlFor="username"> Username </InputLabel>
+                <Input
+                  id="username"
+                  type="text"
+                  username={this.state.username}
+                  onChange={this.inputUserNameChangeHandler}
+                />
+                <FormHelperText className={this.state.usernameRequired}>
+                  <span className="red">required</span>
+                </FormHelperText>
+              </FormControl>
+              <br />
+              <br />
+              <FormControl required>
+                <InputLabel htmlFor="Password"> Password </InputLabel>
+                <Input
+                  id="password"
+                  type="password"
+                  password={this.state.loginPassword}
+                  onChange={this.inputLoginPasswordChangeHandler}
+                />
+                <FormHelperText className={this.state.loginPasswordRequired}>
+                  <span className="red">required</span>
+                </FormHelperText>
+                <br />
+                <FormHelperText className={this.state.incorrectCredentials}>
+                  <span className="red">
+                    Incorrect username and/or password
+                  </span>
+                </FormHelperText>
+              </FormControl>
+              <br />
+              <br />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.loginClickHandler}
+              >
+                LOGIN
+              </Button>
+            </div>
 
           </Card>
           </div>
