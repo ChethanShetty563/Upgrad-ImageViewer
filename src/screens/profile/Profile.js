@@ -164,6 +164,112 @@ class Profile extends Component {
         xhr.send(data);
       }
 
+      editModalHandler = () => {
+        this.setState({ editModal: true, nameRequired: "dispNone", name: "" });
+      };
+    
+      modalCloseHandler = () => {
+        this.setState({ editModal: false, nameRequired: "dispNone" });
+      };
+    
+      //function to handle the input change event
+      inputNameChangeHandler = (e) => {
+        this.setState({ name: e.target.value });
+      };
+    
+      //function to edit the name of the user
+      editNameHandler = () => {
+        //if the input field is empty display the required message or else set fullname of the user and close the modal
+        this.state.name === ""
+          ? this.setState({ nameRequired: "dispBlock" })
+          : this.setState({ fullName: this.state.name, editModal: false });
+      };
+    
+      postModalCloseHandler = () => {
+        this.setState({ postModal: false });
+      };
+    
+      postModalOpenHandler = (postId) => {
+        this.setState({ postModal: true });
+        //filter the post according to the id and display it
+        let clickedPost = this.state.postList.filter((post) => {
+          return post.id === postId;
+        })[0];
+    
+        this.setState({
+          imageUrl: clickedPost.media_url,
+          username: clickedPost.username,
+          caption: clickedPost.caption,
+          tags: clickedPost.caption.match(/#\S+/g),
+          likeIcon: clickedPost.likeIcon,
+          likedIcon: clickedPost.likedIcon,
+          likesCount: clickedPost.likesCount,
+          postId: clickedPost.id,
+          postComments: clickedPost.postComments,
+        });
+      };
+    
+      //function to add a like to a post
+      likeClickHandler = (id) => {
+        let postList = this.state.postList;
+        postList.forEach(function (post) {
+          // if the post id equal to the liked post id then display
+          // the likedIcon, hide the likeIcon, and increment like count by 1
+          if (post.id === id) {
+            post.likesCount += 1;
+            post.likeIcon = "dispNone";
+            post.likedIcon = "dispBlock";
+            this.setState({
+              likeIcon: "dispNone",
+              likedIcon: "dispBlock",
+              likesCount: post.likesCount,
+            });
+          }
+        }, this);
+      };
+    
+      //function to unlike a post
+      likedClickHandler = (id) => {
+        let postList = this.state.postList;
+        postList.forEach(function (post) {
+          // if the post id equal to the liked post id then display the likeIcon, hide the likedIcon, and decrement like count by 1
+          if (post.id === id) {
+            post.likesCount -= 1;
+            post.likeIcon = "dispBlock";
+            post.likedIcon = "dispNone";
+            this.setState({
+              likeIcon: "dispBlock",
+              likedIcon: "dispNone",
+              likesCount: post.likesCount,
+            });
+          }
+        }, this);
+      };
+    
+      addCommentHandler = (id) => {
+        if (this.state.comment === "") {
+          alert("Cannot add Empty comment");
+        } else {
+          let postList = this.state.postList;
+          postList.forEach(function (post) {
+            //if the post id is equal to the commented post id, then add the comment in the postComments array
+            if (post.id === id) {
+              post.postComments.push(this.state.comment);
+              this.setState({
+                comment: "",
+                postComments: post.postComments,
+              });
+              post.clear = "";
+            }
+          }, this);
+        }
+      };
+    
+      //function to handle the input change event
+      commentChangeHandler = (e) => {
+        this.setState({ comment: e.target.value });
+      };
+
     render() {
         const { classes } = this.props;
         return (
